@@ -10,5 +10,5 @@ class MyWindow:
 
     def presentation(self):
         canvas = Canvas(self.root, width=600, height=400, bg="#eee")
-        canvas.create_text(50, 50, text="Mamour Tall - Cheikh Tidiane Diop")
+        canvas.create_text(250, 50, text="Mamour Tall - Cheikh Tidiane Diop")
         canvas.pack()
