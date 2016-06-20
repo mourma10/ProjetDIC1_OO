@@ -1,5 +1,7 @@
+# -*-coding:UTF-8-*
+
 from Tkinter import Canvas, Tk, Entry, Button
-from tkMessageBox import showerror
+from tkMessageBox import showerror, askyesno
 
 """ Center(root, dimx, dimy)
     permet de center la fenetre
@@ -51,6 +53,7 @@ class CreateRoot:
         root = Tk()
         window = GetRoot(root, x, y)
         window.presentation()
+        window.root_navigation()
         window.root.mainloop()
 
 
@@ -65,8 +68,34 @@ class GetRoot:
         center(self.root, dimx, dimy)
         self.dimx = dimx
         self.dimy = dimy
+        self.canvas = Canvas(self.root, width=self.dimx, height=self.dimy, bg="#eee")
+
+    def root_fermer(self):
+        if askyesno('Confirmer la fermeture', 'Êtes-vous sûr de vouloir quitter?'):
+            self.root.quit()
+
+    def clear_root(self):
+        for w in self.root.winfo_children():
+            w.destroy()
 
     def presentation(self):
-        canvas = Canvas(self.root, width=self.dimx, height=self.dimy, bg="#eee")
-        canvas.create_text(self.dimx / 2, self.dimy / 2, text="Mamour Tall - Cheikh Tidiane Diop")
-        canvas.pack()
+        self.canvas.create_text(self.dimx / 2, self.dimy / 2, text="Mamour Tall - Cheikh Tidiane Diop")
+        self.canvas.pack()
+
+    def root_navigation(self):
+        bouton_effacer = Button(self.root, text="Effacer", relief="raised", font="/font/myfont 8 bold",
+                                command=lambda: self.clear_root,
+                                bg="#eee", fg="black", activebackground="#dcc")
+
+        bouton_prec = Button(self.root, text="Precedent", relief="raised", font="/font/myfont 8 bold", command="",
+                             bg="#eee", fg="black", activebackground="#dcc")
+        bouton_quitt = Button(self.root, text="Quitter", command=self.root_fermer, relief="raised",
+                              font="/font/myfont 8 bold",
+                              bg="#eee",
+                              fg="black", activebackground="#dcc")
+        bouton_effacer.pack()
+        bouton_prec.pack()
+        bouton_quitt.pack()
+        self.canvas.create_window(self.dimx / 2 + 18, self.dimy - 20, window=bouton_effacer)
+        self.canvas.create_window(60, self.dimy - 20, window=bouton_prec)
+        self.canvas.create_window(self.dimx - 40, self.dimy - 20, window=bouton_quitt)
