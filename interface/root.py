@@ -16,7 +16,7 @@ def center(root, dimx, dimy):
     root.geometry("%dx%d+%d+%d" % ((dimx, dimy) + (x, y)))
 
 
-""" La classe CreateRoot permet de
+""" La classe CreateRootDimension permet de
     creer une fenetre suivant les dimensions
     fournies en entree"""
 
