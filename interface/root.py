@@ -21,8 +21,10 @@ def center(root, dimx, dimy):
     fournies en entree"""
 
 
-class CreateRoot:
+class CreateRootDimension:
     def __init__(self):
+        self.dimx = 0
+        self.dimy = 0
         self.popup_dim = Tk()
         self.popup_dim.title("Dimensions")
         center(self.popup_dim, 200, 120)
@@ -30,8 +32,9 @@ class CreateRoot:
         canvas = Canvas(self.popup_dim, width=200, height=120, bg="#eff")
         dimx = Entry(self.popup_dim, width=5, relief="raised")
         dimy = Entry(self.popup_dim, width=5, relief="raised")
-        ok = Button(self.popup_dim, text="OK", command=lambda: self.setdimension(dimx.get(), dimy.get()), width=1,
-                    font="../font/myfont 6 bold", fg="#eee")
+        ok = Button(self.popup_dim, text="OK",
+                    command=lambda: self.setrootdimension(dimx.get(), dimy.get()),
+                    width=1, font="../font/myfont 6 bold", fg="#eee")
         canvas.create_window(100, 30, window=dimx)
         canvas.create_text(65, 30, text="X=")
         canvas.create_window(100, 60, window=dimy)
@@ -39,22 +42,16 @@ class CreateRoot:
         canvas.create_window(100, 85, window=ok)
         canvas.pack()
 
-    def setdimension(self, dimx, dimy):
+    def setrootdimension(self, dimx, dimy):
         try:
-            int(dimx)
-            int(dimy)
+            self.dimx = int(dimx)
+            self.dimy = int(dimy)
+            self.popup_dim.destroy()
         except ValueError:
             showerror("Erreur", "Veuillez saisir des entiers")
-            return -1
 
-        self.popup_dim.destroy()
-        x = int(dimx)
-        y = int(dimy)
-        root = Tk()
-        window = GetRoot(root, x, y)
-        window.presentation()
-        window.root_navigation()
-        window.root.mainloop()
+    def getrootdimension(self):
+        return self.dimx, self.dimy
 
 
 """ La classe GetRoot contient notre fenetre principale
@@ -82,12 +79,13 @@ class GetRoot:
         self.canvas.create_text(self.dimx / 2, self.dimy / 2, text="Mamour Tall - Cheikh Tidiane Diop")
         self.canvas.pack()
 
-    def root_navigation(self):
+    def navigation(self):
         bouton_effacer = Button(self.root, text="Effacer", relief="raised", font="/font/myfont 8 bold",
                                 command=lambda: self.clear_root,
                                 bg="#eee", fg="black", activebackground="#dcc")
 
-        bouton_prec = Button(self.root, text="Precedent", relief="raised", font="/font/myfont 8 bold", command="",
+        bouton_prec = Button(self.root, text="Precedent", relief="raised", font="/font/myfont 8 bold",
+                             command="",
                              bg="#eee", fg="black", activebackground="#dcc")
         bouton_quitt = Button(self.root, text="Quitter", command=self.root_fermer, relief="raised",
                               font="/font/myfont 8 bold",
